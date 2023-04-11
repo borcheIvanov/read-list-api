@@ -1,0 +1,11 @@
+name: test-report
+on: [push, workflow_dispatch]
+jobs:
+  test:
+      runs-on: ubuntu-latest
+      steps:
+        name: dotnet-tests-report action
+        uses: zyborg/dotnet-tests-report@v1
+        with:
+          report-title: Read List Api tests
+          github_token: 
