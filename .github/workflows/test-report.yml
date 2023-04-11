@@ -1,0 +1,23 @@
+name: test-report
+on: [push, workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Test
+        run: dotnet test
+      - name: test report
+        uses: zyborg/dotnet-tests-report@v1
+        with:
+          report_title: ReadListApi Tests
+          set_check_status_from_test_outcome: true
+          fail_build_on_failed_tests: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          gist_name: unit_tests.md
+          gist_badge_label: 'UnitTests: %Counters_passed%/%Counters_total%'
+          gist_token: ${{ secrets.GIST_TOKEN }}
