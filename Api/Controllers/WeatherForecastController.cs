@@ -24,8 +24,10 @@ public class WeatherForecastController : ControllerBase
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateTime.Now.AddDays(index),
+#pragma warning disable CA5394
             TemperatureC = Random.Shared.Next(-20, 55),
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+#pragma warning restore CA5394
         })
         .ToArray();
     }
