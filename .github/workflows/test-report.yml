@@ -18,3 +18,6 @@ jobs:
           set_check_status_from_test_outcome: true
           fail_build_on_failed_tests: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          gist_name: unit_tests.md
+          gist_badge_label: 'UnitTests: %Counters_passed%/%Counters_total%'
+          gist_token: ${{ secrets.GIST_TOKEN }}
