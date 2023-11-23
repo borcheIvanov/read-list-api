@@ -30,17 +30,21 @@ public class LinksController: ControllerBase
 		_sender.Send(command, cancellationToken);
 		return Ok();
 	}
-
-	[HttpPut]
-	public IActionResult Archive([FromBody] Guid id, CancellationToken cancellationToken)
+	
+	[HttpDelete("{id:guid}")]
+	public IActionResult Delete(Guid id, CancellationToken cancellationToken)
 	{
-		return Ok();
+		var command = new DeleteLinkCommand(id.ToString());
+		_sender.Send(command, cancellationToken);
+		return NoContent();
 	}
 	
-	[HttpPatch]
-	public IActionResult MarkAsRead([FromBody] Guid id, CancellationToken cancellationToken)
+	[HttpPatch("{id:guid}")]
+	public IActionResult Archive(Guid id, CancellationToken cancellationToken)
 	{
-		return Ok();
+		var command = new ArchiveLinkCommand(id.ToString());
+		_sender.Send(command, cancellationToken);
+		return NoContent();
 	}
 }
 
