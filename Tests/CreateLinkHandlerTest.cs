@@ -1,6 +1,6 @@
 using System;
 using Api;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace Tests;
@@ -10,13 +10,13 @@ public class CreateLinkHandlerTest
     [Fact]
     public void Scrape_title()
     {
-        var mockRepo = new Mock<IRepository>();
-        var mockScraper = new Mock<IContentScraper>();
-        mockScraper.Setup(s => s.GetContent(It.IsAny<Uri>()))
+        var mockRepo = Substitute.For<IRepository>();
+        var mockScraper = Substitute.For<IContentScraper>();
+        mockScraper.GetContent(Arg.Any<Uri>())
             .Returns("<html><head><title>the title</title></head><body>body content</body></html>");
         
-        var handler = new CreateLinkHandler(mockRepo.Object) {
-            Scraper = mockScraper.Object
+        var handler = new CreateLinkHandler(mockRepo) {
+            Scraper = mockScraper
         };
         var title =  handler.GetTitle(new Uri("https://www.google.com"));
         
@@ -26,13 +26,13 @@ public class CreateLinkHandlerTest
     [Fact]
     public void Scrape_title_fallback_to_absolute_uri()
     {
-        var mockRepo = new Mock<IRepository>();
-        var mockScraper = new Mock<IContentScraper>();
-        mockScraper.Setup(s => s.GetContent(It.IsAny<Uri>()))
+        var mockRepo = Substitute.For<IRepository>();
+        var mockScraper = Substitute.For<IContentScraper>();
+        mockScraper.GetContent(Arg.Any<Uri>())
             .Returns("<html><head></head><body>body content</body></html>");
         
-        var handler = new CreateLinkHandler(mockRepo.Object) {
-            Scraper = mockScraper.Object
+        var handler = new CreateLinkHandler(mockRepo) {
+            Scraper = mockScraper
         };
         var title =  handler.GetTitle(new Uri("https://www.google.com/blog/post"));
         
