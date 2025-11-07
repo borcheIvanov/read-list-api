@@ -1,5 +1,4 @@
-﻿using Api.Controllers;
-using MediatR;
+﻿using MediatR;
 
 namespace Api;
 

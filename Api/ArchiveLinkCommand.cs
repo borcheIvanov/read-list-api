@@ -1,5 +1,5 @@
 ﻿using MediatR;
 
-namespace Api.Controllers;
+namespace Api;
 
 public record ArchiveLinkCommand(string Id): IRequest;

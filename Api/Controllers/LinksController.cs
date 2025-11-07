@@ -47,8 +47,3 @@ public class LinksController: ControllerBase
 		return NoContent();
 	}
 }
-
-public class CreateLinkRequest
-{
-	public string Link { get; set; } = null!;
-}
