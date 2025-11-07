@@ -3,17 +3,10 @@ using MediatR;
 
 namespace Api;
 
-public class CreateLinkHandler: IRequestHandler<CreateLinkCommand>
+public class CreateLinkHandler(IRepository repository) : IRequestHandler<CreateLinkCommand>
 {
-	private readonly IRepository _repository;
-	public IContentScraper Scraper;
+	public IContentScraper Scraper = new ContentScraper();
 
-	public CreateLinkHandler(IRepository repository)
-	{
-		_repository = repository;
-		Scraper = new ContentScraper();
-	}
-	
 	public async Task Handle(CreateLinkCommand request, CancellationToken cancellationToken)
 	{
 		var link = new Link {
@@ -22,7 +15,7 @@ public class CreateLinkHandler: IRequestHandler<CreateLinkCommand>
 			Title = GetTitle(request.Link),
 			Address = request.Link.AbsoluteUri
 		};
-		await _repository.Create(link, cancellationToken);
+		await repository.Create(link, cancellationToken);
 	}
 
 	public string GetTitle(Uri requestLink)

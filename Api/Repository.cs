@@ -3,14 +3,9 @@ using Microsoft.Azure.Cosmos;
 
 namespace Api;
 
-public class Repository : IRepository
+public class Repository(Container container) : IRepository
 {
-    private readonly Container _container;
-
-    public Repository(Container container)
-    {
-        _container = container ?? throw new ArgumentNullException(nameof(container));
-    }
+    private readonly Container _container = container ?? throw new ArgumentNullException(nameof(container));
 
 
     public async Task<IEnumerable<Link>> GetLinks(string userId, CancellationToken ct)
